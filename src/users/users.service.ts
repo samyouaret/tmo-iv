@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { UserRoleType } from 'src/types/UserRoleType';
-import { UserType } from 'src/types/UserType';
+import { UserRoleType } from 'src/users/types/UserRoleType';
+import { UserType } from 'src/users/types/UserType';
 
 @Injectable()
 export class UsersService {
