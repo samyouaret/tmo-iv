@@ -23,7 +23,7 @@ export class UsersService {
   async findByEmail(email: string): Promise<UserType<string>> {
     return {
       email: email,
-      password: '123456',
+      password: '$2b$10$HhdyTxLlghypibz21hgnhezF6hJ2ng4IFAhvG5Nw.UDlMZMnJjR0W',
       firstName: 'Dom',
       lastName: 'Brocks',
       id: randomUUID(),
