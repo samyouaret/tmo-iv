@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { randomUUID } from 'crypto';
-import { UserRoleType } from 'src/users/types/UserRoleType';
+import { UserRoleType } from './types/UserRoleType';
 import { UserType } from 'src/users/types/UserType';
 import * as bcrypt from 'bcrypt';
 import { INVALID_CREDENTIALS } from './errors';
