@@ -5,6 +5,7 @@ import {
   Post,
   Param,
   Patch,
+  Delete,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/create-product.dto';
@@ -35,5 +36,10 @@ export class ProductsController {
       ...data,
       image: file.path,
     });
+  }
+
+  @Delete(':id')
+  async delete(@Param('id') id: number) {
+    return this.productsService.delete(id);
   }
 }
