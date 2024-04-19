@@ -31,6 +31,16 @@ export class ProductsService {
     return this.productsRepository.save(product);
   }
 
+  async delete(id: number): Promise<void> {
+    const product = await this.productsRepository.findOne({ where: { id } });
+    if (product == null) {
+      throw new NotFoundException();
+    }
+
+    await this.deleteImage(product.image);
+    await this.productsRepository.delete({ id });
+  }
+
   async deleteImage(path: string): Promise<true | NodeJS.ErrnoException> {
     return new Promise((resolve, reject) => {
       fs.unlink(path, (err) => {
