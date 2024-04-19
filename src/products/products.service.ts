@@ -9,4 +9,10 @@ export class ProductsService {
     @InjectRepository(Product)
     private readonly productsRepository: Repository<Product>,
   ) {}
+
+  async create(input: Omit<Product, 'id'>): Promise<Product> {
+    const product = this.productsRepository.create(input);
+
+    return this.productsRepository.save(product);
+  }
 }
