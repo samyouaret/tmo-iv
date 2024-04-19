@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { UserRoleType } from '../types/UserRoleType';
+import { UserType } from '../types/UserType';
 
 @Entity()
-export class User {
+export class User implements UserType {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -11,6 +12,9 @@ export class User {
 
   @Column()
   lastName: string;
+
+  @Column()
+  email: string;
 
   @Column()
   password: string;

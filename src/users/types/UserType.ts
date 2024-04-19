@@ -1,7 +1,7 @@
 import { UserRoleType } from './UserRoleType';
 
-export interface UserType<ID> {
-  id: ID;
+export interface UserType {
+  id: number;
   firstName: string;
   lastName: string;
   email: string;
