@@ -21,3 +21,19 @@ API docs provide a good start to get up and running with the endpoints of the ap
 Using Docker compose 
 
     docker compose up --build
+
+### Working with node and yarn
+
+To use the app with node and yarn without Docker, first install dependencies.
+
+    yarn install
+
+Setup the variables needed in `.env`
+
+Run database migrations
+
+    yarn run migration:run
+
+Start the application
+
+    yarn run start
