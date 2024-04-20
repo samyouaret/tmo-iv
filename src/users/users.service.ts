@@ -4,11 +4,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserType } from 'src/users/types/UserType';
-import * as bcrypt from 'bcrypt';
 import { INVALID_CREDENTIALS, USER_ALREADY_EXISTS } from './errors';
 import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PasswordHash } from 'src/common/passwordHash';
 
 @Injectable()
 export class UsersService {
@@ -20,7 +20,7 @@ export class UsersService {
   async create(input: Omit<UserType, 'id'>): Promise<UserType> {
     await this.ensureUserNotExists(input.email);
     const newUser = this.usersRepository.create(input);
-    newUser.password = await this.hashPassword(input.password);
+    newUser.password = await PasswordHash.hash(input.password);
 
     await this.usersRepository.save(newUser);
     delete newUser.password;
@@ -40,7 +40,6 @@ export class UsersService {
     if (user == null) {
       throw new UnauthorizedException(INVALID_CREDENTIALS);
     }
-
     await this.ensurePasswordMatch(user, password);
 
     return user;
@@ -50,12 +49,8 @@ export class UsersService {
     return this.usersRepository.findOne({ where: { email } });
   }
 
-  private async hashPassword(password: string) {
-    return bcrypt.hash(password, 10);
-  }
-
   private async ensurePasswordMatch(user: UserType, password: string) {
-    if ((await bcrypt.compare(password, user?.password)) === false) {
+    if ((await PasswordHash.match(password, user?.password)) === false) {
       throw new UnauthorizedException(INVALID_CREDENTIALS);
     }
   }
