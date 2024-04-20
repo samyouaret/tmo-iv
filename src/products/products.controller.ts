@@ -44,7 +44,7 @@ export class ProductsController {
       }),
     )
     file,
-  ) {
+  ): Promise<Product> {
     return this.productsService.create({
       ...data,
       image: file.path,
@@ -68,7 +68,7 @@ export class ProductsController {
       }),
     )
     file,
-  ) {
+  ): Promise<Product> {
     return this.productsService.update(id, {
       ...data,
       image: file.path,
@@ -80,7 +80,7 @@ export class ProductsController {
     status: 200,
     description: 'Success when product is deleted',
   })
-  async delete(@Param('id') id: number) {
+  async delete(@Param('id') id: number): Promise<void> {
     return this.productsService.delete(id);
   }
 
