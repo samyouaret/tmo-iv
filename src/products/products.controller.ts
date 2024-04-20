@@ -15,7 +15,10 @@ import {
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { MEDIA_TYPES, UseFileUpload } from './interceptors/upload.interceptor';
+import {
+  MEDIA_TYPES,
+  UseFileUpload,
+} from '../common/storage/upload.interceptor';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { PageDto } from 'src/common/pagination/PageDto';
 import { Product } from './entities/product.entity';
