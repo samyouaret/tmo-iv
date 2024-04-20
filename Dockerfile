@@ -15,4 +15,6 @@ RUN yarn build
 
 EXPOSE 3000
 
-CMD ["node", "dist/main.js"]
+RUN chmod +x ./startup.sh
+
+ENTRYPOINT [ "./startup.sh" ]
