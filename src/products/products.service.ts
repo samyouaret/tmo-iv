@@ -2,10 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PageMetaDto } from 'src/common/pagination/PageMetaDto';
-import { PageDto } from 'src/common/pagination/PageDto';
+import { PageMetaDto } from '../common/pagination/PageMetaDto';
+import { PageDto } from '../common/pagination/PageDto';
 import { ProductFilterDto } from './dtos/product-filter.dto';
-import { FileStorage } from 'src/common/storage/FileStorage';
+import { FileStorage } from '../common/storage/FileStorage';
 
 @Injectable()
 export class ProductsService {

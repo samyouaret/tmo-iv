@@ -20,9 +20,9 @@ import {
   UseFileUpload,
 } from '../common/storage/upload.interceptor';
 import { UpdateProductDto } from './dtos/update-product.dto';
-import { PageDto } from 'src/common/pagination/PageDto';
+import { PageDto } from '../common/pagination/PageDto';
 import { Product } from './entities/product.entity';
-import { ApiPaginatedResponse } from 'src/common/pagination/ApiPaginatedResponse';
+import { ApiPaginatedResponse } from '../common/pagination/ApiPaginatedResponse';
 import { ProductFilterDto } from './dtos/product-filter.dto';
 import {
   ApiBearerAuth,

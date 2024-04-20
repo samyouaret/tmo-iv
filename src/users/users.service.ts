@@ -8,7 +8,7 @@ import { INVALID_CREDENTIALS, USER_ALREADY_EXISTS } from './errors';
 import { User } from './entities/users.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PasswordHash } from 'src/common/passwordHash';
+import { PasswordHash } from '../common/passwordHash';
 
 @Injectable()
 export class UsersService {
