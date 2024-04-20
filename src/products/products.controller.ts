@@ -19,7 +19,7 @@ import { PageDto } from 'src/common/pagination/PageDto';
 import { Product } from './entities/product.entity';
 import { ApiPaginatedResponse } from 'src/common/pagination/ApiPaginatedResponse';
 import { ProductFilterDto } from './dtos/product-filter.dto';
-import { ApiExtraModels } from '@nestjs/swagger';
+import { ApiExtraModels, ApiResponse } from '@nestjs/swagger';
 
 @Controller('products')
 @ApiExtraModels(Product)
@@ -27,6 +27,11 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @ApiResponse({
+    status: 200,
+    description: 'The newly created product',
+    type: Product,
+  })
   @UseFileUpload('image')
   async create(@Body() data: CreateProductDto, @UploadedFile() file) {
     return this.productsService.create({
@@ -37,6 +42,11 @@ export class ProductsController {
 
   @Patch(':id')
   @UseFileUpload('image')
+  @ApiResponse({
+    status: 200,
+    description: 'The updated product',
+    type: Product,
+  })
   async update(
     @Param('id') id: number,
     @Body() data: UpdateProductDto,
@@ -49,6 +59,10 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: 200,
+    description: 'Success when product is deleted',
+  })
   async delete(@Param('id') id: number) {
     return this.productsService.delete(id);
   }
