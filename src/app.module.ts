@@ -6,6 +6,8 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -31,6 +33,10 @@ import { ProductsModule } from './products/products.module';
         autoLoadEntities: true,
       }),
       inject: [ConfigService],
+    }),
+    ServeStaticModule.forRoot({
+      serveRoot: '/uploads',
+      rootPath: join(__dirname, '..', 'uploads'),
     }),
     UsersModule,
     AuthModule,
