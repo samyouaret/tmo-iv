@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  tmo-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tmo_api_ct
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    env_file:
+      - .env
+    restart: always
+    depends_on: [db]
+  db:
+    image: postgres
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - '5432:5432'
