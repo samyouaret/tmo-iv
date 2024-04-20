@@ -4,6 +4,10 @@ import { diskStorage } from 'multer';
 import { randomBytes } from 'crypto';
 import { extname } from 'path';
 
+export const MEDIA_TYPES = {
+  IMAGE: /(jpeg|jpg|png|webp|heic|heif|tiff)$/,
+};
+
 export function UseFileUpload(uploadField: string) {
   return applyDecorators(
     UseInterceptors(

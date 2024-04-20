@@ -10,10 +10,12 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  FileTypeValidator,
+  ParseFilePipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { UseFileUpload } from './interceptors/upload.interceptor';
+import { MEDIA_TYPES, UseFileUpload } from './interceptors/upload.interceptor';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { PageDto } from 'src/common/pagination/PageDto';
 import { Product } from './entities/product.entity';
@@ -34,7 +36,15 @@ export class ProductsController {
   })
   @ApiConsumes('multipart/form-data')
   @UseFileUpload('image')
-  async create(@Body() data: CreateProductDto, @UploadedFile() file) {
+  async create(
+    @Body() data: CreateProductDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: MEDIA_TYPES.IMAGE })],
+      }),
+    )
+    file,
+  ) {
     return this.productsService.create({
       ...data,
       image: file.path,
@@ -52,7 +62,12 @@ export class ProductsController {
   async update(
     @Param('id') id: number,
     @Body() data: UpdateProductDto,
-    @UploadedFile() file,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: MEDIA_TYPES.IMAGE })],
+      }),
+    )
+    file,
   ) {
     return this.productsService.update(id, {
       ...data,
