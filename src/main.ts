@@ -8,11 +8,13 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.setGlobalPrefix('api');
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('Tmo E-Commerce API')
     .setDescription('The Tmo API for store and product management')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup('docs', app, document);
 
   await app.listen(3000);
