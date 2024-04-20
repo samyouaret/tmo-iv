@@ -3,6 +3,9 @@ import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as fs from 'fs';
+import { PageMetaDto } from 'src/common/pagination/PageMetaDto';
+import { PageDto } from 'src/common/pagination/PageDto';
+import { ProductFilterDto } from './dtos/product-filter.dto';
 
 @Injectable()
 export class ProductsService {
@@ -50,5 +53,32 @@ export class ProductsService {
         resolve(true);
       });
     });
+  }
+
+  public async getProducts(
+    productFilter: ProductFilterDto,
+  ): Promise<PageDto<Product>> {
+    const queryBuilder = this.productsRepository.createQueryBuilder('product');
+
+    queryBuilder
+      .orderBy('product.price', productFilter.order)
+      .skip(productFilter.skip)
+      .take(productFilter.take);
+
+    if (productFilter.category) {
+      queryBuilder.where('product.category = :category', {
+        category: productFilter.category,
+      });
+    }
+
+    const itemCount = await queryBuilder.getCount();
+    const { entities } = await queryBuilder.getRawAndEntities();
+
+    const pageMetaDto = new PageMetaDto({
+      itemCount,
+      pageOptionsDto: productFilter,
+    });
+
+    return new PageDto(entities, pageMetaDto);
   }
 }
