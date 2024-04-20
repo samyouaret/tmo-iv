@@ -3,7 +3,7 @@ import { Product } from './entities/product.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
-import { FileStorage } from 'src/common/pagination/storage/FileStorage';
+import { FileStorage } from 'src/common/storage/FileStorage';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product])],

@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PageMetaDto } from 'src/common/pagination/PageMetaDto';
 import { PageDto } from 'src/common/pagination/PageDto';
 import { ProductFilterDto } from './dtos/product-filter.dto';
-import { FileStorage } from 'src/common/pagination/storage/FileStorage';
+import { FileStorage } from 'src/common/storage/FileStorage';
 
 @Injectable()
 export class ProductsService {
