@@ -3,8 +3,8 @@ import { UserRoleType } from 'src/users/types/UserRoleType';
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { createOwner } from '../seeds/owner-user';
 
-export class Init1713635149175 implements MigrationInterface {
-  name = 'Init1713635149175';
+export class Seed1713635149175 implements MigrationInterface {
+  name = 'Seed1713635149175';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     const manager = queryRunner.manager;
