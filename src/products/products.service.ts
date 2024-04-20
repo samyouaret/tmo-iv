@@ -2,16 +2,17 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as fs from 'fs';
 import { PageMetaDto } from 'src/common/pagination/PageMetaDto';
 import { PageDto } from 'src/common/pagination/PageDto';
 import { ProductFilterDto } from './dtos/product-filter.dto';
+import { FileStorage } from 'src/common/pagination/storage/FileStorage';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectRepository(Product)
     private readonly productsRepository: Repository<Product>,
+    private readonly fileStorage: FileStorage,
   ) {}
 
   async create(input: Omit<Product, 'id'>): Promise<Product> {
@@ -27,7 +28,7 @@ export class ProductsService {
     }
     if (product.image !== input.image) {
       //  delete image from storage
-      await this.deleteImage(product.image);
+      await this.fileStorage.delete(product.image);
     }
 
     Object.assign(product, input);
@@ -40,19 +41,8 @@ export class ProductsService {
       throw new NotFoundException();
     }
 
-    await this.deleteImage(product.image);
+    await this.fileStorage.delete(product.image);
     await this.productsRepository.delete({ id });
-  }
-
-  async deleteImage(path: string): Promise<true | NodeJS.ErrnoException> {
-    return new Promise((resolve, reject) => {
-      fs.unlink(path, (err) => {
-        if (err) {
-          reject(err);
-        }
-        resolve(true);
-      });
-    });
   }
 
   public async getProducts(
