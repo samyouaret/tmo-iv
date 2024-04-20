@@ -19,7 +19,7 @@ import { PageDto } from 'src/common/pagination/PageDto';
 import { Product } from './entities/product.entity';
 import { ApiPaginatedResponse } from 'src/common/pagination/ApiPaginatedResponse';
 import { ProductFilterDto } from './dtos/product-filter.dto';
-import { ApiExtraModels, ApiResponse } from '@nestjs/swagger';
+import { ApiConsumes, ApiExtraModels, ApiResponse } from '@nestjs/swagger';
 
 @Controller('products')
 @ApiExtraModels(Product)
@@ -32,6 +32,7 @@ export class ProductsController {
     description: 'The newly created product',
     type: Product,
   })
+  @ApiConsumes('multipart/form-data')
   @UseFileUpload('image')
   async create(@Body() data: CreateProductDto, @UploadedFile() file) {
     return this.productsService.create({
@@ -47,6 +48,7 @@ export class ProductsController {
     description: 'The updated product',
     type: Product,
   })
+  @ApiConsumes('multipart/form-data')
   async update(
     @Param('id') id: number,
     @Body() data: UpdateProductDto,

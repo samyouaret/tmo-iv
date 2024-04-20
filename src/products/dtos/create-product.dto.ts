@@ -17,8 +17,8 @@ export class CreateProductDto {
   description: string;
 
   @ApiProperty({
-    example: 'samy@gmail.com',
-    description: 'User email',
+    example: '13.30',
+    description: 'Product price',
   })
   @IsDecimal({ decimal_digits: '0,2' })
   price: number;
@@ -26,4 +26,7 @@ export class CreateProductDto {
   @ApiProperty()
   @IsNotEmpty()
   category: string;
+
+  @ApiProperty({ type: 'string', format: 'binary' })
+  image: any;
 }
