@@ -1,12 +1,14 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
-
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  apiDef(): object {
+    return {
+      name: 'Tmo Api',
+      description: 'The Tmo API',
+      version: '1.0.0',
+      docs: '/docs',
+    };
   }
 }
