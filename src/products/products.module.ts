@@ -3,10 +3,11 @@ import { Product } from './entities/product.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsService } from './products.service';
 import { ProductsController } from './products.controller';
+import { FileStorage } from 'src/common/pagination/storage/FileStorage';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Product])],
-  providers: [ProductsService],
+  providers: [ProductsService, FileStorage],
   controllers: [ProductsController],
 })
 export class ProductsModule {}
