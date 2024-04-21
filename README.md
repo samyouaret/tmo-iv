@@ -48,3 +48,9 @@ password=admin
 ```
 
 Without using Docker, it will be created after running `yarn run migration:run` command above.
+
+## Assumptions and caveats
+
+1. The product category is a string to avoid unnecessary complexity of managing categories.
+
+2. Tests are not implemented.
