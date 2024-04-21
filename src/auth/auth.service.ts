@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { JwtPayloadType } from './types/JwtPayloadType';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
+import { JWT_EXPIRE } from './constants';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,7 @@ export class AuthService {
     return {
       access_token: await this.jwtService.signAsync(payload, {
         secret: this.configService.get('JWT_SECRET'),
-        expiresIn: '15m',
+        expiresIn: JWT_EXPIRE,
       }),
     };
   }
