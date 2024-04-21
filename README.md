@@ -2,6 +2,8 @@
 
 ## Project Setup
 
+This Project is based on [Nestjs](https://docs.nestjs.com/).
+
 For a quick setup, the application can be built and run with **Docker** and `docker-compose` you can start by cloning this repository.
 
     git clone https://github.com/samyouaret/tmo-iv
