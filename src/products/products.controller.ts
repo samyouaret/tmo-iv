@@ -7,8 +7,6 @@ import {
   Patch,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Query,
   FileTypeValidator,
   ParseFilePipe,
@@ -32,11 +30,11 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
-import { RolesGuard } from 'src/auth/authorization/guards/Role.guard';
 import { setRoles } from 'src/auth/authorization/setRoles';
 import { UserRoleType } from 'src/users/types/UserRoleType';
 
 @Controller('products')
+@setRoles(UserRoleType.OWNER)
 @ApiExtraModels(Product)
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
@@ -50,8 +48,7 @@ export class ProductsController {
   @ApiBearerAuth()
   @UseFileUpload('image')
   @Post()
-  @setRoles(UserRoleType.OWNER)
-  @UseGuards(AuthGuard, RolesGuard)
+  @UseGuards(AuthGuard)
   async create(
     @Body() data: CreateProductDto,
     @UploadedFile(
@@ -75,8 +72,7 @@ export class ProductsController {
   })
   @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
-  @setRoles(UserRoleType.OWNER)
-  @UseGuards(AuthGuard, RolesGuard)
+  @UseGuards(AuthGuard)
   @Patch(':id')
   async update(
     @Param('id') id: number,
@@ -99,16 +95,17 @@ export class ProductsController {
     description: 'Success when product is deleted',
   })
   @ApiBearerAuth()
-  @setRoles(UserRoleType.OWNER)
-  @UseGuards(AuthGuard, RolesGuard)
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async delete(@Param('id') id: number): Promise<void> {
     return this.productsService.delete(id);
   }
 
-  @Get()
-  @HttpCode(HttpStatus.OK)
   @ApiPaginatedResponse(Product)
+  @ApiBearerAuth()
+  @setRoles(UserRoleType.OWNER, UserRoleType.GUEST)
+  @UseGuards(AuthGuard)
+  @Get()
   async getProducts(
     @Query() pageOptionsDto: ProductFilterDto,
   ): Promise<PageDto<Product>> {
