@@ -11,15 +11,21 @@ export class User implements UserType {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 'Sam',
+  })
   @Column()
   firstName: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 'Ouaret',
+  })
   @Column()
   lastName: string;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 'sam@gmail.com',
+  })
   @Column()
   email: string;
 
