@@ -14,7 +14,7 @@ export class AuthController {
     description: 'Sign in with email and password',
     type: AccessTokenDto,
   })
-  @ApiResponse({ status: 400 })
+  @ApiResponse({ status: 400, description: 'Invalid credentials' })
   login(@Body() input: UserLoginDto) {
     return this.authService.login(input.email, input.password);
   }

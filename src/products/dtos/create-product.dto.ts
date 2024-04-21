@@ -23,10 +23,17 @@ export class CreateProductDto {
   @IsDecimal({ decimal_digits: '0,2' })
   price: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    example: 'phones',
+    description: 'Product category',
+  })
   @IsNotEmpty()
   category: string;
 
-  @ApiProperty({ type: 'string', format: 'binary' })
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    description: 'Product image',
+  })
   image: any;
 }
