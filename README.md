@@ -28,7 +28,7 @@ To use the app with node and yarn without Docker, first install dependencies.
 
     yarn install
 
-Setup the variables needed in `.env`
+Setup the variables needed in `.env`, and make sure to create a Database in Postgres
 
 Run database migrations
 
