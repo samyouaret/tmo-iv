@@ -18,9 +18,11 @@ export class UsersService {
   ) {}
 
   async create(input: Omit<UserType, 'id'>): Promise<UserType> {
-    await this.ensureUserNotExists(input.email);
+    const email = input.email.toLocaleLowerCase();
+    await this.ensureUserNotExists(email);
     const newUser = this.usersRepository.create(input);
     newUser.password = await PasswordHash.hash(input.password);
+    newUser.email = email;
 
     await this.usersRepository.save(newUser);
     delete newUser.password;
