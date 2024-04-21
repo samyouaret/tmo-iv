@@ -14,11 +14,13 @@ import { UPLOAD_DIR, UPLOAD_ROOT } from './common/storage/constants';
   imports: [
     ConfigModule.forRoot({
       validationSchema: Joi.object({
+        APP_PORT: Joi.number().required(),
         DB_HOST: Joi.string().required(),
         DB_PORT: Joi.number().required(),
         DB_USER: Joi.string().required(),
         DB_PASSWORD: Joi.string().required(),
         DB_NAME: Joi.string().required(),
+        JWT_SECRET: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRootAsync({
