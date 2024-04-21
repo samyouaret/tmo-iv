@@ -28,7 +28,7 @@ export class AuthGuard implements CanActivate {
     }
 
     try {
-      const payload = await this.verifyToken(token, context.getHandler());
+      const payload = await this.verifyToken(token, context);
       this.populateUser(payload, request);
     } catch (e) {
       throw new UnauthorizedException(e.message);
@@ -37,18 +37,18 @@ export class AuthGuard implements CanActivate {
     return true;
   }
 
-  async verifyToken(token: string, handler: any): Promise<any> {
-    const audience = this.reflector.get<string[]>(ROLES_KEY, handler);
+  async verifyToken(token: string, context: ExecutionContext): Promise<any> {
+    const audience = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
     return this.jwtService.verifyAsync(token, {
       secret: this.configService.get('JWT_SECRET'),
       audience,
     });
   }
 
-  private async populateUser(
-    payload: JwtPayloadType,
-    request: Request,
-  ): Promise<void> {
+  private populateUser(payload: JwtPayloadType, request: Request): void {
     request['user'] = { id: payload.sub, role: payload.aud };
   }
 
