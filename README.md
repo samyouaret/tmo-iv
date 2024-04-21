@@ -10,7 +10,7 @@ Or with SSH
 
     git clone git@github.com:samyouaret/tmo-iv
 
-Create an .env file from of env.example, and make sure to setup env variables needed by the application.
+Create an `.env` file from of `env.example`, and make sure to setup env variables needed by the application.
 
     cp .env.example .env
 
@@ -37,3 +37,14 @@ Run database migrations
 Start the application
 
     yarn run start
+
+##  Project Init
+
+With Docker setup, A new user with role `OWNER` will be created at the startup of the application.
+
+```txt
+email=admin@tmo-mailer.com
+password=admin
+```
+
+Without using Docker, it will be created after running `yarn run migration:run` command above.
